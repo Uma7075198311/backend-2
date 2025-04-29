@@ -43,6 +43,12 @@ db = client["complaints_db"]
 collection = db["complaints"]
 
 
+try:
+    print(client.list_database_names())
+except Exception as e:
+    print(f"MongoDB connection failed: {e}")
+
+
 
 @app.route("/", methods=["GET"])
 def home():
@@ -165,7 +171,9 @@ def update_settings():
 
 @app.route("/admin/complaints", methods=["GET"])
 def get_complaints():
-    return jsonify(complaints)
+    data = list(collection.find({}, {"_id": 0}))
+    return jsonify(data)
+
 
 @app.route("/admin/complaints/<int:complaint_id>/resolve", methods=["POST"])
 def resolve_complaint(complaint_id):
