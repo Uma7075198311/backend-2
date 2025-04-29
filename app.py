@@ -344,6 +344,3 @@ def delete_complaint(complaint_id):
     return jsonify({"error": "Complaint not found"}), 404
 
 handler = app
-
-if __name__ == "__main__":
-    app.run(debug=True)
